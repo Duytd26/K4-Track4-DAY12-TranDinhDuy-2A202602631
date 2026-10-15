@@ -7,8 +7,8 @@
 | Họ và tên | Trần Đình Duy |
 | MSSV (đúng bằng `--student-id` bạn đã chạy) | `2A202602631` |
 | GitHub | `Duytd26` |
-| Seed chia dữ liệu / seed mô hình (xem `evidence/closedloop.json`, mục `student`) | `<điền>` |
-| Số seed huấn luyện bạn dùng (`--seeds`) | `<điền>` |
+| Seed chia dữ liệu / seed mô hình (xem `evidence/closedloop.json`, mục `student`) | `3778` / `7871`, `7872`, `7873` |
+| Số seed huấn luyện bạn dùng (`--seeds`) | `3` |
 
 ## Kết quả cuối
 
@@ -44,7 +44,12 @@ Phát nhanh nhất không có khung trễ hoặc rớt; phát theo thời gian t
 ## Câu 3 · Kịch bản
 Lưới của bạn (tốc độ cruise, giới hạn khoảng cách, số ô): bao nhiêu % ô **không ai tránh được**? Độ trễ phản ứng 0 → 0,6 s làm vùng đâm của IDM tăng bao nhiêu? Log có phủ vùng khó không? (dẫn giới hạn phanh mạnh nhất của người lái trong log, và phần lưới đòi hỏi hơn thế)
 
-(trả lời ở đây)
+Theo `evidence/scenarios.json`, lưới gồm 60 mức khoảng cách × 45 mức tốc độ tiến gần = 2.700 ô, với tốc độ cruise 10 m/s, khoảng cách 2,7601–59,3123 m và tốc độ tiến gần 0–10 m/s.
+Biên bất khả thi là `gap < dv * t_react + dv² / (2 * 9)` khi `dv > 0`: ngay cả phanh tối đa cũng không đủ quãng đường để tránh va chạm.
+Khi độ trễ tăng từ 0 lên 0,6 s, vùng bất khả thi tăng từ 0,9630% lên 5,1481%; diện tích va chạm của IDM tăng tương ứng 4,1852 điểm phần trăm.
+IDM không gây va chạm ở vùng còn tránh được trong cả hai lưới; kiểm chứng phanh tối đa so với công thức cho 0 ô lệch ngoài dải sát biên ở cả hai độ trễ.
+Giới hạn phanh người lái ở phân vị 99,9 là 3,6248 m/s², thấp hơn giới hạn cơ cấu 9 m/s²; 5,2222% ô đòi phanh mạnh hơn mức người lái này.
+Khai thác được 614 sự kiện phanh trên 9.610 quỹ đạo, chiếm 6,3892%; log tự nhiên có các ca phanh nhưng chưa đại diện đủ cho những cảnh cắt đầu cần phanh rất mạnh, nên không thể chỉ chấm trên log rồi suy ra an toàn trên toàn lưới.
 
 ## Câu 4 · Vòng hở và vòng kín
 Dán bảng L2 và tỷ lệ va chạm của bốn bộ điều khiển (kèm hạng ở mỗi cách chấm). Cặp nào đổi thứ tự? Vì sao IDM có L2 như vậy mà vẫn lái tốt? Vì sao EgoMLP có L2 tốt hơn constant-velocity mà vẫn đâm?
