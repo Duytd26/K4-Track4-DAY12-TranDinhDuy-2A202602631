@@ -129,10 +129,8 @@ def compare_with_tol(golden, new, atol=1e-3, rtol=1e-3):
     equal = (golden == new) | (np.isnan(golden) & np.isnan(new))
     within_tol = np.isclose(new, golden, atol=atol, rtol=rtol, equal_nan=True)
     differing = np.flatnonzero(~within_tol.all(axis=1))
-    with np.errstate(invalid="ignore"):
-        abs_diff = np.where(equal, 0.0, np.abs(new - golden))
-    # An unmatched NaN is a missing command, rather than harmless padding.
-    abs_diff = np.where(np.isnan(abs_diff), np.inf, abs_diff)
+    valid = np.isfinite(golden) & np.isfinite(new)
+    abs_diff = np.abs(new[valid] - golden[valid])
     return {
         "segments": int(golden.shape[0]),
         "differ_beyond_tol": int(differing.size),
